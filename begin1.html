@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bank PO Prelims Mock Test</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #a5a8aa;
+      color: #272e39;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: rgb(253, 253, 253);
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 10px 25px rgba(28, 22, 22, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #1058f2;
+    }
+
+    .question-card {
+      background: #cedcea;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(122, 114, 114, 0.05);
+    }
+
+    .question {
+      font-size: 1.1em;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .options button {
+      padding: 12px;
+      background: #fcf5f5;
+      border: 2px solid #a2b7d3;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: all 0.2s ease;
+    }
+
+    .options button:hover {
+      background: #b4d8f0;
+    }
+
+    .options button.selected {
+      background: #dbeafe;
+      border-color: #d3def0;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: #22c55e;
+      color: white;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 30px;
+    }
+
+    .submit-btn:hover {
+      background: #16a34a;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Bank PO Prelims Mock Test</h1>
+  <div class="question-card">
+    <div class="question" id="question">Loading question...</div>
+    <div class="options" id="options"></div>
+  </div>
+  <button class="submit-btn" onclick="submitTest()">Submit Test</button>
+</div>
+
+<script>
+  const questions = [
+    { q: "What is the next number in the sequence: 2, 6, 12, 20, ?", options: ["28", "30", "32", "34"], answer: 2 },
+    { q: "Which word is opposite in meaning to 'Benevolent'?", options: ["Malevolent", "Generous", "Kind", "Charitable"], answer: 0 },
+    { q: "Choose the correctly spelled word:", options: ["Acommodation", "Accomodation", "Accommodation", "Acomodation"], answer: 2 },
+    { q: "What is 25% of 240?", options: ["40", "50", "60", "70"], answer: 2 },
+    { q: "If A is 4 years older than B and the sum of their ages is 24, what is B's age?", options: ["10", "12", "14", "8"], answer: 0 },
+    { q: "Find the odd one out: Pen, Pencil, Eraser, Chair", options: ["Pen", "Pencil", "Eraser", "Chair"], answer: 3 },
+    { q: "What is the synonym of 'Abate'?", options: ["Increase", "Lessen", "Enhance", "Intensify"], answer: 1 },
+    { q: "What is the compound interest on ₹1000 at 10% p.a. for 2 years?", options: ["₹100", "₹200", "₹210", "₹220"], answer: 2 },
+    { q: "If x = 5 and y = 2, then the value of x² + y² is:", options: ["29", "25", "20", "30"], answer: 0 },
+    { q: "Which is the largest 4-digit number divisible by 88?", options: ["9988", "9999", "9968", "9944"], answer: 3 },
+    { q: "Which part of speech is the word 'beautifully'?", options: ["Noun", "Adverb", "Adjective", "Verb"], answer: 1 },
+    { q: "What comes next in the series: Z, X, V, T, ?", options: ["S", "R", "Q", "P"], answer: 1 },
+    { q: "Which is NOT a programming language?", options: ["Python", "HTML", "Java", "Telegram"], answer: 3 },
+    { q: "Choose the correct preposition: She is good ___ dancing.", options: ["at", "in", "with", "for"], answer: 0 },
+    { q: "A man walks 4 km North, then 3 km East. How far is he from the starting point?", options: ["5 km", "6 km", "7 km", "4 km"], answer: 0 },
+  ];
+
+  let current = 0;
+  let selectedAnswers = [];
+  const questionEl = document.getElementById('question');
+  const optionsEl = document.getElementById('options');
+
+  function loadQuestion() {
+    const q = questions[current];
+    questionEl.textContent = `${current + 1}. ${q.q}`;
+    optionsEl.innerHTML = '';
+    q.options.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.textContent = opt;
+      btn.onclick = () => selectOption(idx, btn);
+      optionsEl.appendChild(btn);
+    });
+  }
+
+  function selectOption(index, btn) {
+    selectedAnswers[current] = index;
+    [...optionsEl.children].forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+
+    if (current < questions.length - 1) {
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 300);
+    } else {
+      document.querySelector('.submit-btn').scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  function submitTest() {
+    let score = 0;
+    questions.forEach((q, i) => {
+      if (selectedAnswers[i] === q.answer) score++;
+    });
+    alert(`You scored ${score} out of ${questions.length}`);
+    // Redirect or handle result
+  }
+ 
+
+
+  loadQuestion();
+</script>
+
+</body>
+</html>

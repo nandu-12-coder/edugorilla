@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Programming Languages Mock Test</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: rgb(151, 151, 229);
+      color: #0b1016;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: rgb(244, 235, 218);
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #121214;
+    }
+
+    .progress-container {
+      height: 10px;
+      background: #cbccd0;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: #020110;
+      width: 0%;
+      border-radius: 5px;
+      transition: width 0.3s;
+    }
+
+    .question-card {
+      background: #9dbcdc;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .question {
+      font-size: 1.2em;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .options button {
+      padding: 12px;
+      border: 2px solid #7191d1;
+      border-radius: 8px;
+      background: #e6eaed;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.2s ease;
+    }
+
+    .options button:hover {
+      background: #5299c8;
+    }
+
+    .options button.selected {
+      background: #a4b1c1;
+      border-color: #aecaf7;
+    }
+
+    .submit-btn {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      background: #10b981;
+      color: rgb(245, 242, 242);
+      font-size: 1.1em;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 30px;
+    }
+
+    .submit-btn:hover {
+      background: #059669;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+
+      .question {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Programming Languages Mock Test</h1>
+    <div class="progress-container">
+      <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <div class="question-card">
+      <div class="question" id="question">Loading question...</div>
+      <div class="options" id="options"></div>
+    </div>
+
+    <button class="submit-btn" onclick="submitTest()">Submit Test</button>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        q: "Which of the following is a compiled language?",
+        options: ["Python", "Java", "JavaScript", "Ruby"],
+        answer: 1
+      },
+      {
+        q: "What does HTML stand for?",
+        options: ["Hyper Text Markup Language", "Hyper Transfer Markup Language", "Hyper Type Markup Language", "Hyper Tool Markup Language"],
+        answer: 0
+      },
+      {
+        q: "Which programming language is known as the 'mother of all languages'?",
+        options: ["C", "C++", "Java", "Assembly"],
+        answer: 0
+      },
+      {
+        q: "Which of the following is an interpreted language?",
+        options: ["C++", "Java", "Python", "C"],
+        answer: 2
+      },
+      {
+        q: "Which programming language is mostly used for web development?",
+        options: ["Ruby", "Python", "JavaScript", "Java"],
+        answer: 2
+      },
+      {
+        q: "Which of the following is used to style web pages?",
+        options: ["CSS", "HTML", "JavaScript", "PHP"],
+        answer: 0
+      },
+      {
+        q: "Which programming language is known for its simplicity and readability?",
+        options: ["Python", "Java", "C++", "Ruby"],
+        answer: 0
+      },
+      {
+        q: "What does SQL stand for?",
+        options: ["Structured Query Language", "Simple Query Language", "Sequential Query Language", "Structured Question Language"],
+        answer: 0
+      },
+      {
+        q: "Which language is used for Android app development?",
+        options: ["Swift", "C#", "Java", "Kotlin"],
+        answer: 2
+      },
+      {
+        q: "Which language is used for iOS app development?",
+        options: ["Java", "Swift", "Python", "C++"],
+        answer: 1
+      },
+      {
+        q: "Which of the following is not an object-oriented programming language?",
+        options: ["C++", "Python", "JavaScript", "C"],
+        answer: 3
+      },
+      {
+        q: "Which language is used for data analysis and machine learning?",
+        options: ["JavaScript", "C#", "R", "Swift"],
+        answer: 2
+      },
+      {
+        q: "Which language is used for front-end web development?",
+        options: ["C", "JavaScript", "Java", "Ruby"],
+        answer: 1
+      },
+      {
+        q: "Which of the following languages is statically typed?",
+        options: ["Python", "Java", "Ruby", "JavaScript"],
+        answer: 1
+      },
+      {
+        q: "Which of these is not a web development framework?",
+        options: ["Angular", "Django", "Swift", "React"],
+        answer: 2
+      }
+    ];
+
+    let current = 0;
+    let selectedAnswers = [];
+    const questionEl = document.getElementById('question');
+    const optionsEl = document.getElementById('options');
+    const progressBar = document.getElementById('progress-bar');
+
+    function loadQuestion() {
+      const q = questions[current];
+      questionEl.textContent = `${current + 1}. ${q.q}`;
+      optionsEl.innerHTML = '';
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.textContent = opt;
+        btn.onclick = () => selectOption(idx, btn);
+        optionsEl.appendChild(btn);
+      });
+
+      // Update progress bar
+      const progress = ((current + 1) / questions.length) * 100;
+      progressBar.style.width = `${progress}%`;
+    }
+
+    function selectOption(index, btn) {
+      selectedAnswers[current] = index;
+      [...optionsEl.children].forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+
+      if (current < questions.length - 1) {
+        setTimeout(() => {
+          current++;
+          loadQuestion();
+        }, 300);
+      } else {
+        document.querySelector('.submit-btn').scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function submitTest() {
+      let score = 0;
+      questions.forEach((q, i) => {
+        if (selectedAnswers[i] === q.answer) score++;
+      });
+      alert(`You scored ${score} out of ${questions.length}`);
+      window.location.href = "results.html";
+    }
+
+    // Initialize
+    loadQuestion();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign Up</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: rgb(190, 225, 243);; /* Purple background */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .signup-card {
+      background-color: #ecd4d4;
+      padding: 40px 30px;
+      border-radius: 14px;
+      box-shadow: 0 6px 20px rgba(106, 101, 101, 0.2);
+      width: 360px;
+    }
+
+    .signup-card h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #0c0c0c;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 5px;
+      color: #0b0a0a;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 15px;
+      border: 1px solid #aa9797;
+      border-radius: 8px;
+      transition: border-color 0.3s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #00c896;
+    }
+
+    .signup-button {
+      width: 100%;
+      padding: 12px;
+      background-color: #08b187;
+      border: none;
+      color: #fff;
+      font-weight: 600;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .signup-button:hover {
+      background-color: #085b46;
+    }
+
+    .login-link {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .login-link a {
+      color: #1a3a32;
+      text-decoration: none;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="signup-card">
+    <h2>Create an Account</h2>
+    <form action="welcome.html" method="POST">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="Your full name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="example@email.com" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Create Password</label>
+        <input type="password" id="password" name="password" placeholder="Minimum 6 characters" required>
+      </div>
+      <button class="signup-button" type="submit">Sign Up</button>
+    </form>
+    <div class="login-link">
+      Already have an account? <a href="login.html">Log In</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Railway NTPC - Slide Style Test</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Rubik', sans-serif;
+      background: #75ece2;
+      color: #18181a;
+    }
+
+    .wrapper {
+      max-width: 700px;
+      margin: 40px auto;
+      background: #f6e8e8;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 10px 25px rgba(15, 15, 15, 0.1);
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      margin: 0;
+      color: #0f1010;
+    }
+
+    .progress {
+      height: 8px;
+      background: #abb8d3;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: #3b82f6;
+      width: 0%;
+      transition: width 0.3s ease-in-out;
+    }
+
+    .question {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+    }
+
+    .options button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 2px solid #cbd5e1;
+      border-radius: 8px;
+      background: #bbcbdb;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .options button.selected {
+      background: #cad6e6;
+      border-color: #2563eb;
+    }
+
+    .nav-btns {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .nav-btns button, .submit-btn {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+
+    .nav-btns button {
+      background: #0284c7;
+      color: rgb(237, 218, 218);
+    }
+
+    .submit-btn {
+      width: 100%;
+      background: #0bc184;
+      color: white;
+      margin-top: 20px;
+    }
+
+    .submit-btn:hover {
+      background: #059669;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+    <div class="header">
+      <h2>Railway NTPC Test</h2>
+      <span id="tracker">1 / 15</span>
+    </div>
+
+    <div class="progress"><div class="progress-bar" id="progress-bar"></div></div>
+
+    <div class="question" id="question">Loading...</div>
+    <div class="options" id="options"></div>
+
+    <div class="nav-btns">
+      <button onclick="prevQuestion()">Previous</button>
+      <button onclick="nextQuestion()">Next</button>
+    </div>
+
+    <button class="submit-btn" onclick="submitTest()">Submit Test</button>
+  </div>
+
+  <script>
+    const questions = [
+      { q: "What is the capital of India?", options: ["Delhi", "Mumbai", "Kolkata", "Bhopal"], answer: 0 },
+      { q: "2 + 2 * 2 = ?", options: ["6", "8", "4", "10"], answer: 0 },
+      { q: "Synonym of 'Happy'?", options: ["Sad", "Angry", "Joyful", "Mad"], answer: 2 },
+      { q: "Largest planet?", options: ["Earth", "Mars", "Jupiter", "Venus"], answer: 2 },
+      { q: "Fastest animal?", options: ["Tiger", "Cheetah", "Leopard", "Horse"], answer: 1 },
+      { q: "Taj Mahal built by?", options: ["Akbar", "Shah Jahan", "Babur", "Humayun"], answer: 1 },
+      { q: "What is H2O?", options: ["Oxygen", "Water", "Hydrogen", "Acid"], answer: 1 },
+      { q: "Current President of India (2024)?", options: ["Modi", "Droupadi Murmu", "Rajnath", "Kovind"], answer: 1 },
+      { q: "What comes next: 2, 4, 6, 8, ?", options: ["10", "9", "12", "11"], answer: 0 },
+      { q: "Currency of Japan?", options: ["Yen", "Won", "Dollar", "Rupee"], answer: 0 },
+      { q: "Speed = ?", options: ["Mass/Time", "Distance/Time", "Force x Time", "Velocity"], answer: 1 },
+      { q: "Shape with 3 sides?", options: ["Circle", "Rectangle", "Triangle", "Oval"], answer: 2 },
+      { q: "How many states in India (2024)?", options: ["29", "30", "28", "27"], answer: 2 },
+      { q: "Light travels fastest in?", options: ["Water", "Air", "Glass", "Vacuum"], answer: 3 },
+      { q: "Who wrote Ramayana?", options: ["Tulsidas", "Kalidasa", "Valmiki", "Ved Vyas"], answer: 2 }
+    ];
+
+    let current = 0;
+    let selectedAnswers = Array(questions.length).fill(null);
+
+    const questionEl = document.getElementById("question");
+    const optionsEl = document.getElementById("options");
+    const trackerEl = document.getElementById("tracker");
+    const progressEl = document.getElementById("progress-bar");
+
+    function loadQuestion() {
+      const q = questions[current];
+      questionEl.textContent = `${current + 1}. ${q.q}`;
+      trackerEl.textContent = `${current + 1} / ${questions.length}`;
+      progressEl.style.width = `${((current + 1) / questions.length) * 100}%`;
+
+      optionsEl.innerHTML = "";
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        btn.textContent = opt;
+        if (selectedAnswers[current] === idx) {
+          btn.classList.add("selected");
+        }
+        btn.onclick = () => {
+          selectedAnswers[current] = idx;
+          loadQuestion();
+        };
+        optionsEl.appendChild(btn);
+      });
+    }
+
+    function nextQuestion() {
+      if (current < questions.length - 1) {
+        current++;
+        loadQuestion();
+      }
+    }
+
+    function prevQuestion() {
+      if (current > 0) {
+        current--;
+        loadQuestion();
+      }
+    }
+
+    function submitTest() {
+      let score = 0;
+      questions.forEach((q, i) => {
+        if (selectedAnswers[i] === q.answer) score++;
+      });
+      alert(`You scored ${score} out of ${questions.length}`);
+    }
+
+    loadQuestion();
+  </script>
+
+</body>
+</html>

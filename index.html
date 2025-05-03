@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduGorilla Clone</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Right-Aligned Button</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 20px;
+        background-color: rgb(235, 216, 216); /* purple background like your screenshot */
+      }
+  
+      .button-container {
+        display: flex;
+        justify-content: flex-end; /* Aligns buttons to the right */
+        gap: 8px;
+      }
+  
+      .login-button {
+        border: 1px solid #ccc;
+        background-color: rgb(247, 246, 246);
+        color: #0a0101;
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-weight: 500;
+        cursor: pointer;
+
+      }
+  
+      .signup-button {
+        background-color: #00c896;
+        color: rgb(21, 20, 20);
+        padding: 10px 24px;
+        border: none;
+        border-radius: 10px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      
+    </style>
+
+
+</head>
+<body>
+   
+    <header>
+        <div class="button-container">
+           
+            <!-- In your main/home page -->
+             <a href="login.html">
+             <button class="login-button">Log In</button>
+             </a>
+            <a href="signup.html">
+             <button class="signup-button">Sign Up</button>
+        
+            </a>
+        </div>
+        <h1>
+             <img src="data:image/jpeg;base64,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" class="logo">
+             EduGorilla Clone
+        </h1>
+        <div>
+        </div>
+        
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="courses.html">Courses</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="test1.html">Mock Tests</a></li>
+                
+            </ul>
+        </nav>
+        
+    </header>
+
+    <section class="hero">
+
+        <h2>Prepare for Exams with the best platform</h2>
+        <p>It aims to assist students with effective learning resources.</p>
+        <p>It focuses on providing affordable, high-quality learning resources</p>
+        <p>Find thousands of tests & study materials for competitive exams.</p>
+        <a href="courses.html" class="btn">Explore Courses</a>
+    </section>
+
+    <section class="features">
+        <h2>Why Choose Us?</h2>
+        <ul>
+            <li> ✅ Thousands of Mock Tests                           </li>
+            <li> ✅ Detailed Performance Analysis                     </li>
+            <li> ✅ Expert-Curated Study Materials                    </li>
+            <li> ✅ Mobile-Friendly Experience                        </li>
+            <li> ✅ 24/7 Support & community                          </li>
+            <li> ✅ 1,300 competitive exams                           </li>
+            <li> ✅ Performance analytics with improvement suggestions</li>
+        </ul>
+    </section>
+
+    <section class="testimonials">
+        <h2>What Our Users Say</h2>
+        <div class="testimonial">
+            <p>"EduGorilla helped me ace my banking exam with their detailed mock tests! Highly recommended."</p>
+            <p><strong>- Ananya S.</strong></p>
+        </div>
+        <div class="testimonial">
+            <p>"The study materials and analysis provided are top-notch. I feel more confident about my exams."</p>
+            <p><strong>- Rahul K.</strong></p>
+        </div>
+    </section>
+    <script src="js/scripts.js" defer></script>
+
+
+    <footer>
+        <p>&copy; 2025 EduGorilla Clone. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SSC CGL Tier 1 Mock Test</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #0443c1;
+      color: #111112;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: #fcfafa;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(18, 18, 18, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #4f46e5;
+    }
+
+    .progress-container {
+      height: 10px;
+      background: #a19e9e;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: #4b3fd8;
+      width: 0%;
+      border-radius: 5px;
+      transition: width 0.3s;
+    }
+
+    .question-card {
+      background: #b7cbde;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(6, 6, 6, 0.1);
+    }
+
+    .question {
+      font-size: 1.2em;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .options button {
+      padding: 12px;
+      border: 2px solid #9097a5;
+      border-radius: 8px;
+      background: #f4f8fd;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.2s ease;
+    }
+
+    .options button:hover {
+      background: #e0f2fe;
+    }
+
+    .options button.selected {
+      background: #e1e7ef;
+      border-color: #e8ecf3;
+    }
+
+    .submit-btn {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      background: #088e61;
+      color: white;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 30px;
+    }
+
+    .submit-btn:hover {
+      background: #059669;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+
+      .question {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>SSC CGL Tier 1 Mock Test</h1>
+    <div class="progress-container">
+      <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <div class="question-card">
+      <div class="question" id="question">Loading question...</div>
+      <div class="options" id="options"></div>
+    </div>
+
+    <button class="submit-btn" onclick="submitTest()">Submit Test</button>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        q: "Who is the first woman Prime Minister of India?",
+        options: ["Indira Gandhi", "Sonia Gandhi", "Sarojini Naidu", "Pratibha Patil"],
+        answer: 0
+      },
+      {
+        q: "Which gas is known as laughing gas?",
+        options: ["Nitrous oxide", "Oxygen", "Carbon Dioxide", "Nitrogen"],
+        answer: 0
+      },
+      {
+        q: "What is the value of pi (π)?",
+        options: ["3.14", "3.1416", "3.141", "3.145"],
+        answer: 1
+      },
+      {
+        q: "Who wrote the book 'Harry Potter and the Philosopher's Stone'?",
+        options: ["J.K. Rowling", "J.R.R. Tolkien", "George Orwell", "Agatha Christie"],
+        answer: 0
+      },
+      {
+        q: "Which of the following is the capital of India?",
+        options: ["New Delhi", "Mumbai", "Kolkata", "Chennai"],
+        answer: 0
+      },
+      {
+        q: "What is the square root of 144?",
+        options: ["10", "12", "14", "16"],
+        answer: 1
+      },
+      {
+        q: "Which planet is known as the Red Planet?",
+        options: ["Earth", "Mars", "Venus", "Saturn"],
+        answer: 1
+      },
+      {
+        q: "What is the national flower of India?",
+        options: ["Rose", "Lotus", "Tulip", "Sunflower"],
+        answer: 1
+      },
+      {
+        q: "What is the full form of 'WWW' in web technology?",
+        options: ["World Wide Web", "World Wide Work", "Web Wide World", "Wide Web World"],
+        answer: 0
+      },
+      {
+        q: "Who invented the light bulb?",
+        options: ["Alexander Graham Bell", "Nikola Tesla", "Thomas Edison", "Albert Einstein"],
+        answer: 2
+      },
+      {
+        q: "Which of the following is a prime number?",
+        options: ["15", "17", "18", "20"],
+        answer: 1
+      },
+      {
+        q: "The currency of Japan is?",
+        options: ["Yuan", "Won", "Yen", "Ringgit"],
+        answer: 2
+      },
+      {
+        q: "Which language is used for web development?",
+        options: ["Java", "HTML", "Python", "C++"],
+        answer: 1
+      },
+      {
+        q: "What is the chemical symbol for water?",
+        options: ["O2", "H2O", "CO2", "H2O2"],
+        answer: 1
+      },
+      {
+        q: "In which year did India gain independence?",
+        options: ["1942", "1947", "1950", "1930"],
+        answer: 1
+      }
+    ];
+
+    let current = 0;
+    let selectedAnswers = [];
+    const questionEl = document.getElementById('question');
+    const optionsEl = document.getElementById('options');
+    const progressBar = document.getElementById('progress-bar');
+
+    function loadQuestion() {
+      const q = questions[current];
+      questionEl.textContent = `${current + 1}. ${q.q}`;
+      optionsEl.innerHTML = '';
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.textContent = opt;
+        btn.onclick = () => selectOption(idx, btn);
+        optionsEl.appendChild(btn);
+      });
+
+      // Update progress bar
+      const progress = ((current + 1) / questions.length) * 100;
+      progressBar.style.width = `${progress}%`;
+    }
+
+    function selectOption(index, btn) {
+      selectedAnswers[current] = index;
+      [...optionsEl.children].forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+
+      if (current < questions.length - 1) {
+        setTimeout(() => {
+          current++;
+          loadQuestion();
+        }, 300);
+      } else {
+        document.querySelector('.submit-btn').scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function submitTest() {
+      let score = 0;
+      questions.forEach((q, i) => {
+        if (selectedAnswers[i] === q.answer) score++;
+      });
+      alert(`You scored ${score} out of ${questions.length}`);
+      window.location.href = "results.html";
+    }
+
+    // Initialize
+    loadQuestion();
+  </script>
+
+</body>
+</html>
+
+
